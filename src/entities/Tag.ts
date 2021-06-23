@@ -1,9 +1,8 @@
-import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn} from "typeorm";
-import { v4 as uuid } from "uuid";
+import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 
 @Entity('tags')
-export class Tag{
-
+export class Tag {
   @PrimaryColumn()
   readonly id: string;
 
@@ -14,10 +13,10 @@ export class Tag{
   created_at: Date;
 
   @UpdateDateColumn()
-  updated_at: Date
+  updated_at: Date;
 
-  constructor(){
-    if(!this.id){
+  constructor() {
+    if (!this.id) {
       this.id = uuid();
     }
   }

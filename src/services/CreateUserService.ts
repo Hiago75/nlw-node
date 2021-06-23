@@ -1,6 +1,7 @@
-import { getCustomRepository } from 'typeorm'
-import { UserRepositories } from "../repositories/UserRepositories";
-import isEmail from 'validator/lib/isEmail'
+import { getCustomRepository } from 'typeorm';
+import { UserRepositories } from '../repositories/UserRepositories';
+import isEmail from 'validator/lib/isEmail';
+import { User } from '../entities/User';
 
 interface IUserRequest {
   name: string;
@@ -8,26 +9,26 @@ interface IUserRequest {
   admin?: boolean;
 }
 
-export class CreateUserService{
-  async execute({name, email, admin}: IUserRequest){
-    const usersRepository = getCustomRepository(UserRepositories)
+export class CreateUserService {
+  async execute({ name, email, admin }: IUserRequest): Promise<User> {
+    const usersRepository = getCustomRepository(UserRepositories);
 
     //Verifies if e-mail has been sent
-    if(!email){
-      throw new Error("E-mail is obligatory")
+    if (!email) {
+      throw new Error('E-mail is obligatory');
     }
 
     //Verifies if e-mail is valid
-    if(!isEmail(email)){
-      throw new Error("Invalid E-mail")
+    if (!isEmail(email)) {
+      throw new Error('Invalid E-mail');
     }
 
     //Check if the e-mail sent by the user already exists on our DB
     const userAlreadyExists = await usersRepository.findOne({
-      email
+      email,
     });
 
-    if(userAlreadyExists) {
+    if (userAlreadyExists) {
       throw new Error('User already exists');
     }
 
@@ -35,13 +36,12 @@ export class CreateUserService{
     const user = usersRepository.create({
       name,
       email,
-      admin
-    })
+      admin,
+    });
 
     //Save the user on DB
     await usersRepository.save(user);
 
-    return user
+    return user;
   }
 }
-

@@ -20,7 +20,5 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],
-  rules: {
-    '@typescript-eslint/no-empty-function': 0,
-  },
+  rules: {},
 };
