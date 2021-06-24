@@ -2,15 +2,17 @@ import { getCustomRepository } from 'typeorm';
 import { UserRepositories } from '../repositories/UserRepositories';
 import isEmail from 'validator/lib/isEmail';
 import { User } from '../entities/User';
+import { genSaltSync, hash } from 'bcryptjs';
 
 interface IUserRequest {
   name: string;
   email: string;
   admin?: boolean;
+  password: string;
 }
 
 export class CreateUserService {
-  async execute({ name, email, admin }: IUserRequest): Promise<User> {
+  async execute({ name, email, admin = false, password }: IUserRequest): Promise<User> {
     const usersRepository = getCustomRepository(UserRepositories);
 
     //Verifies if e-mail has been sent
@@ -32,11 +34,14 @@ export class CreateUserService {
       throw new Error('User already exists');
     }
 
+    const passwordHash = await hash(password, genSaltSync());
+
     //Create the user reference using the repository
     const user = usersRepository.create({
       name,
       email,
       admin,
+      password: passwordHash,
     });
 
     //Save the user on DB
