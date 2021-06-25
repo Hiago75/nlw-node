@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
-import { UserRepositories } from '../repositories/UserRepositories';
+import { UserRepositories } from '../../repositories/UserRepositories';
 import isEmail from 'validator/lib/isEmail';
-import { User } from '../entities/User';
+import { User } from '../../entities/User';
 import { genSaltSync, hash } from 'bcryptjs';
 
 interface IUserRequest {
