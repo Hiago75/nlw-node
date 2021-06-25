@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { UserRepositories } from '../../repositories/UserRepositories';
+import { Forbidden } from '../../custom/errors/Forbidden';
 
 interface IAuthRequest {
   email: string;
@@ -17,13 +18,13 @@ export class AuthUserService {
 
     //Verifies if e-mail exists
     if (!user) {
-      throw new Error('Email/Password incorrect');
+      throw new Forbidden('Email/Password incorrect');
     }
 
     //Verifies if password is correct
     const passwordMatch = await compare(password, user.password);
     if (!passwordMatch) {
-      throw new Error('Email/Password incorrect');
+      throw new Forbidden('Email/Password incorrect');
     }
     //Generate Token
     const token = sign(

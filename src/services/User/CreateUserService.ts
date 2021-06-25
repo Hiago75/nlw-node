@@ -3,6 +3,7 @@ import { UserRepositories } from '../../repositories/UserRepositories';
 import isEmail from 'validator/lib/isEmail';
 import { User } from '../../entities/User';
 import { genSaltSync, hash } from 'bcryptjs';
+import { BadRequest } from '../../custom/errors/BadRequest';
 
 interface IUserRequest {
   name: string;
@@ -17,12 +18,12 @@ export class CreateUserService {
 
     //Verifies if e-mail has been sent
     if (!email) {
-      throw new Error('E-mail is obligatory');
+      throw new BadRequest('E-mail is obligatory');
     }
 
     //Verifies if e-mail is valid
     if (!isEmail(email)) {
-      throw new Error('Invalid E-mail');
+      throw new BadRequest('Invalid E-mail');
     }
 
     //Check if the e-mail sent by the user already exists on our DB
@@ -31,7 +32,7 @@ export class CreateUserService {
     });
 
     if (userAlreadyExists) {
-      throw new Error('User already exists');
+      throw new BadRequest('User already exists');
     }
 
     const passwordHash = await hash(password, genSaltSync());

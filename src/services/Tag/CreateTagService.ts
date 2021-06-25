@@ -1,4 +1,5 @@
 import { getCustomRepository } from 'typeorm';
+import { BadRequest } from '../../custom/errors/BadRequest';
 import { Tag } from '../../entities/Tag';
 import { TagsRepositories } from '../../repositories/TagsRepositories';
 
@@ -8,7 +9,7 @@ export class CreateTagService {
 
     //Verifies if the tag name has been sent
     if (!name) {
-      throw new Error('Name is obligatory.');
+      throw new BadRequest('Name is obligatory.');
     }
 
     //Verifies if the tag name sent by the user already exists on DB
@@ -17,7 +18,7 @@ export class CreateTagService {
     });
 
     if (tagAlreadyExists) {
-      throw new Error('Tag already exists');
+      throw new BadRequest('Tag already exists');
     }
 
     //Create the tag reference using the repository
