@@ -1,9 +1,11 @@
-import { getCustomRepository } from 'typeorm';
-import { UserRepositories } from '../../repositories/UserRepositories';
 import isEmail from 'validator/lib/isEmail';
-import { User } from '../../entities/User';
 import { genSaltSync, hash } from 'bcryptjs';
-import { BadRequest } from '../../custom/errors/BadRequest';
+import { getCustomRepository } from 'typeorm';
+
+import { UserRepositories } from '../../repositories';
+import { User } from '../../entities/User';
+
+import { BadRequest } from '../../custom/errors';
 
 interface IUserRequest {
   name: string;

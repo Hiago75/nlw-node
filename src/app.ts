@@ -5,17 +5,12 @@ import 'express-async-errors';
 import 'reflect-metadata';
 import cors from 'cors';
 import { errorHandler } from './middlewares/errorHandler';
-
-import userRoutes from './routes/usersRoutes';
-import tagsRoutes from './routes/tagsRoutes';
-import complimentsRoutes from './routes/complimentsRoutes';
-import authRoutes from './routes/authRoutes';
 import { Express } from 'express-serve-static-core';
+
+import { userRoutes, tagsRoutes, complimentsRoutes, authRoutes } from './routes';
 
 dotenv.config();
 dbConnect();
-
-export const app = express();
 
 class App {
   private _app: Express;

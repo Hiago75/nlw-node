@@ -1,9 +1,11 @@
 import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Expose } from 'class-transformer';
+
 import { v4 as uuid } from 'uuid';
+import { ITag } from '../interfaces/ITag';
 
 @Entity('tags')
-export class Tag {
+export class Tag implements ITag {
   @PrimaryColumn()
   readonly id: string;
 

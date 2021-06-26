@@ -1,13 +1,20 @@
 import { Request, Response } from 'express';
-import { CreateTagService } from '../../services/Tag/CreateTagService';
+import { findRequestBodyItems } from '../../helpers/findRequestBodyItems';
+import { ITag } from '../../interfaces';
+import { CreateTagService } from '../../services';
 
 export class CreateTagController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name } = request.body;
+    const tag = await this.createTag(request);
+
+    return response.json(tag);
+  }
+
+  async createTag(request: Request): Promise<ITag> {
+    const { name } = findRequestBodyItems(request, ['name']);
     const createTagService = new CreateTagService();
+    const tag = await createTagService.execute(name);
 
-    const user = await createTagService.execute(name);
-
-    return response.json(user);
+    return tag;
   }
 }

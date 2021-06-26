@@ -1,12 +1,24 @@
 import { Request, Response } from 'express';
-import { Compliment } from '../../entities/Compliment';
-import { CreateComplimentService } from '../../services/Compliments/CreateComplimentService';
+import { findRequestBodyItems } from '../../helpers/findRequestBodyItems';
+import { findRequestUserId } from '../../helpers/findRequestUserId';
+import { ICompliment } from '../../interfaces';
+import { CreateComplimentService } from '../../services';
 
 export class CreateComplimentController {
-  async handle(request: Request, response: Response): Promise<Response<Compliment>> {
-    const { tag_id, message, user_receiver } = request.body;
-    const { user_id } = request;
+  // Create and return the final compliment object as JSON
+  async handle(_request: Request, response: Response): Promise<Response<ICompliment>> {
+    const compliment = await this.createCompliment(_request);
 
+    return response.json(compliment);
+  }
+
+  async createCompliment(request: Request): Promise<ICompliment> {
+    const { tag_id, message, user_receiver } = findRequestBodyItems(request, [
+      'tag_id',
+      'message',
+      'user_receiver',
+    ]);
+    const { user_id } = findRequestUserId(request);
     const createComplimentService = new CreateComplimentService();
 
     const compliment = await createComplimentService.execute({
@@ -16,6 +28,6 @@ export class CreateComplimentController {
       user_sender: user_id,
     });
 
-    return response.json(compliment);
+    return compliment;
   }
 }

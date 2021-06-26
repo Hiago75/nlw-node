@@ -1,10 +1,11 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { ICompliment } from '../interfaces/ICompliment';
 import { Tag } from './Tag';
 import { User } from './User';
 
 @Entity('compliments')
-export class Compliment {
+export class Compliment implements ICompliment {
   @PrimaryColumn()
   readonly id: string;
 

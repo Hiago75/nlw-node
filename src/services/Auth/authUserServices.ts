@@ -1,8 +1,8 @@
 import { getCustomRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import { UserRepositories } from '../../repositories/UserRepositories';
-import { Forbidden } from '../../custom/errors/Forbidden';
+import { UserRepositories } from '../../repositories';
+import { Forbidden } from '../../custom/errors';
 
 interface IAuthRequest {
   email: string;
