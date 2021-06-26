@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+    nlw-valoriza:
+        container_name: nlw-valoriza
+        hostname: nlw-valoriza
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: 123456
+            POSTGRES_DB: valoriza
+            PGDATA: /var/lib/postgresonly/data/pgdata
+        volumes:
+            - ~/.PostgresData/postgresonly/valoriza:/var/lib/postgresonly/data/pgdata
+        ports:
+            - 5432:5432
