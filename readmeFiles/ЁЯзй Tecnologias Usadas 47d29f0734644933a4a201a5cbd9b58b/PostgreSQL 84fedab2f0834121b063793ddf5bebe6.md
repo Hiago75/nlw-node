@@ -1,3 +1,0 @@
-# PostgreSQL
-
-Status: Milha extra

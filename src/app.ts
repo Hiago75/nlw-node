@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
-import { dbConnect } from './database';
 import express from 'express';
 import 'express-async-errors';
 import 'reflect-metadata';
 import cors from 'cors';
-import { errorHandler } from './middlewares/errorHandler';
 import { Express } from 'express-serve-static-core';
 
+import { errorHandler } from './middlewares/errorHandler';
+import { dbConnect } from './database';
 import { userRoutes, tagsRoutes, complimentsRoutes, authRoutes } from './routes';
 
 dotenv.config();
@@ -17,18 +17,12 @@ class App {
 
   constructor() {
     this._app = express();
-    this.middlewares();
     this.routes();
+    this.middlewares();
   }
 
   get app() {
     return this._app;
-  }
-
-  middlewares() {
-    this.app.use(cors());
-    this.app.use(express.json());
-    this.app.use(errorHandler);
   }
 
   routes() {
@@ -36,6 +30,12 @@ class App {
     this.app.use('/tags', tagsRoutes);
     this.app.use('/compliments', complimentsRoutes);
     this.app.use('/auth', authRoutes);
+  }
+
+  middlewares() {
+    this.app.use(cors());
+    this.app.use(express.json());
+    this.app.use(errorHandler);
   }
 }
 

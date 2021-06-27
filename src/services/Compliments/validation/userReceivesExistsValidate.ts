@@ -6,6 +6,7 @@ export async function userReceiverExists(
   user_receiver: string,
 ): Promise<void> {
   const userReceiverExists = await usersRepositories.findOne(user_receiver);
+
   if (!userReceiverExists) {
     throw new BadRequest("User receiver doesn't exists!");
   }

@@ -1,3 +1,0 @@
-# Validator
-
-Status: Milha extra
