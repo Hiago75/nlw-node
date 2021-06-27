@@ -6,6 +6,7 @@ import { CreateUserService } from './User/createUserServices';
 import { ListUsersService } from './User/listUsersServices';
 import { ListUserReceivedComplimentsService } from './User/listUserReceivedComplimentsServices';
 import { ListUserSentComplimentsService } from './User/listUserSentComplimentsServices';
+import { ListAdminUsersService } from './User/listAdminUsersService';
 
 export {
   AuthUserService,
@@ -16,4 +17,5 @@ export {
   ListUsersService,
   ListUserReceivedComplimentsService,
   ListUserSentComplimentsService,
+  ListAdminUsersService,
 };

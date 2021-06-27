@@ -1,10 +1,18 @@
 import { getCustomRepository } from 'typeorm';
 
-import { Compliment } from '../../entities/Compliment';
+import { ICompliment } from '../../interfaces';
 import { ComplimentsRepositories } from '../../repositories';
 
 export class ListUserSentComplimentsService {
-  async execute(user_id: string): Promise<Compliment[]> {
+  //Start the process and return the list of compliments sent by user
+  async execute(user_id: string): Promise<ICompliment[]> {
+    const compliments = this.searchUserSentCompliments(user_id);
+
+    return compliments;
+  }
+
+  //Search compliments sent by user on DB based on user_id and returns the list containing this compliments
+  async searchUserSentCompliments(user_id: string): Promise<ICompliment[]> {
     const complimentRepositories = getCustomRepository(ComplimentsRepositories);
 
     const compliments = await complimentRepositories.find({

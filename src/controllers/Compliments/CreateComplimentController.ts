@@ -6,8 +6,8 @@ import { CreateComplimentService } from '../../services';
 
 export class CreateComplimentController {
   // Create and return the final compliment object as JSON
-  async handle(_request: Request, response: Response): Promise<Response<ICompliment>> {
-    const compliment = await this.createCompliment(_request);
+  async handle(request: Request, response: Response): Promise<Response<ICompliment>> {
+    const compliment = await this.createCompliment(request);
 
     return response.json(compliment);
   }

@@ -3,9 +3,9 @@ import { CustomError } from '../custom/errors/';
 
 export function errorHandler(
   err: Error,
-  _request: Request,
+  request: Request,
   response: Response,
-  _next: NextFunction,
+  next: NextFunction,
 ): Response {
   if (err instanceof CustomError) {
     return response.status(err.statusCode).json({

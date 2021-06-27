@@ -1,11 +1,10 @@
-import isEmail from 'validator/lib/isEmail';
 import { genSaltSync, hash } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
 
 import { UserRepositories } from '../../repositories';
-import { User } from '../../entities/User';
+import { IUser } from '../../interfaces';
 
-import { BadRequest } from '../../custom/errors';
+import { userValidationHandler } from './validation';
 
 interface IUserRequest {
   name: string;
@@ -15,41 +14,45 @@ interface IUserRequest {
 }
 
 export class CreateUserService {
-  async execute({ name, email, admin = false, password }: IUserRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UserRepositories);
+  //Start user creation process and return the user
+  async execute({ name, email, admin = false, password }: IUserRequest): Promise<IUser> {
+    const usersRepositories = getCustomRepository(UserRepositories);
 
-    //Verifies if e-mail has been sent
-    if (!email) {
-      throw new BadRequest('E-mail is obligatory');
-    }
+    const user = await this.createUser(usersRepositories, { name, email, admin, password });
+    await this.saveOnUserDB(usersRepositories, user);
 
-    //Verifies if e-mail is valid
-    if (!isEmail(email)) {
-      throw new BadRequest('Invalid E-mail');
-    }
+    return user;
+  }
 
-    //Check if the e-mail sent by the user already exists on our DB
-    const userAlreadyExists = await usersRepository.findOne({
-      email,
-    });
-
-    if (userAlreadyExists) {
-      throw new BadRequest('User already exists');
-    }
-
+  //Create password Hash using bcrypt and return the password hash
+  async createPasswordHash(password: string): Promise<string> {
     const passwordHash = await hash(password, genSaltSync());
 
+    return passwordHash;
+  }
+
+  //Create and return the user after verifying if everything is fine and return the user
+  async createUser(
+    usersRepositories: UserRepositories,
+    { name, email, admin, password }: IUserRequest,
+  ): Promise<IUser> {
+    await userValidationHandler(usersRepositories, email);
+
+    const passwordHash = await this.createPasswordHash(password);
+
     //Create the user reference using the repository
-    const user = usersRepository.create({
+    const user = usersRepositories.create({
       name,
       email,
       admin,
       password: passwordHash,
     });
 
-    //Save the user on DB
-    await usersRepository.save(user);
-
     return user;
+  }
+
+  //Save user on user DB
+  async saveOnUserDB(usersRepositories: UserRepositories, user: IUser): Promise<void> {
+    await usersRepositories.save(user);
   }
 }

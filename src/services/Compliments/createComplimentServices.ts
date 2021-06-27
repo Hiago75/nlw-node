@@ -1,7 +1,9 @@
 import { getCustomRepository } from 'typeorm';
-import { BadRequest } from '../../custom/errors';
-import { Compliment } from '../../entities/Compliment';
-import { ComplimentsRepositories, UserRepositories } from '../../repositories';
+
+import { ICompliment } from '../../interfaces';
+import { ComplimentsRepositories } from '../../repositories';
+
+import { complimentsValidationHandler } from './validation';
 
 interface IComplimentRequest {
   tag_id: string;
@@ -16,19 +18,23 @@ export class CreateComplimentService {
     message,
     user_receiver,
     user_sender,
-  }: IComplimentRequest): Promise<Compliment> {
+  }: IComplimentRequest): Promise<ICompliment> {
+    const compliment = this.createCompliment({ tag_id, message, user_receiver, user_sender });
+
+    return compliment;
+  }
+
+  //Verifies is the user that will receive the compliment exists
+
+  async createCompliment({
+    tag_id,
+    message,
+    user_receiver,
+    user_sender,
+  }: IComplimentRequest): Promise<ICompliment> {
     const complimentRepositories = getCustomRepository(ComplimentsRepositories);
-    const usersRepositories = getCustomRepository(UserRepositories);
 
-    if (user_sender === user_receiver) {
-      throw new BadRequest("An user can't compliment her/him own self");
-    }
-
-    const userReceiverExists = await usersRepositories.findOne(user_receiver);
-
-    if (!userReceiverExists) {
-      throw new BadRequest("User receiver doesn't exists!");
-    }
+    await complimentsValidationHandler(user_sender, user_receiver);
 
     const compliment = complimentRepositories.create({
       tag_id,

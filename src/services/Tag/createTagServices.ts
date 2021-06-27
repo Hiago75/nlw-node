@@ -1,34 +1,34 @@
 import { getCustomRepository } from 'typeorm';
-import { BadRequest } from '../../custom/errors';
-import { Tag } from '../../entities/Tag';
+import { ITag } from '../../interfaces';
 import { TagsRepositories } from '../../repositories/';
+import { tagValidationHandler } from './validation';
 
 export class CreateTagService {
-  async execute(name: string): Promise<Tag> {
+  //Start Tag creation process
+  async execute(name: string): Promise<ITag> {
     const tagsRepositories = getCustomRepository(TagsRepositories);
+    const tag = await this.createTag(tagsRepositories, name);
 
-    //Verifies if the tag name has been sent
-    if (!name) {
-      throw new BadRequest('Name is obligatory.');
-    }
+    await this.saveTagOnDb(tagsRepositories, tag);
 
-    //Verifies if the tag name sent by the user already exists on DB
-    const tagAlreadyExists = await tagsRepositories.findOne({
-      name,
-    });
+    return tag;
+  }
 
-    if (tagAlreadyExists) {
-      throw new BadRequest('Tag already exists');
-    }
+  //Create tag if everything is fine
+  async createTag(tagsRepositories: TagsRepositories, name: string): Promise<ITag> {
+    //Validate everything
+    await tagValidationHandler(tagsRepositories, name);
 
     //Create the tag reference using the repository
     const tag = tagsRepositories.create({
       name,
     });
 
-    //Save the tag on DB
-    await tagsRepositories.save(tag);
-
     return tag;
+  }
+
+  //Save tag on DB
+  async saveTagOnDb(tagRepositories: TagsRepositories, tag: ITag): Promise<void> {
+    await tagRepositories.save(tag);
   }
 }
