@@ -34,7 +34,7 @@ export class CreateComplimentService {
   }: IComplimentRequest): Promise<ICompliment> {
     const complimentRepositories = getCustomRepository(ComplimentsRepositories);
 
-    await complimentsValidationHandler(user_sender, user_receiver);
+    await complimentsValidationHandler(tag_id, user_sender, user_receiver, message);
 
     const compliment = complimentRepositories.create({
       tag_id,

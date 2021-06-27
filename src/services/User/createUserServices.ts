@@ -36,7 +36,7 @@ export class CreateUserService {
     usersRepositories: UserRepositories,
     { name, email, admin, password }: IUserRequest,
   ): Promise<IUser> {
-    await userValidationHandler(usersRepositories, email);
+    await userValidationHandler(usersRepositories, name, email, password);
 
     const passwordHash = await this.createPasswordHash(password);
 

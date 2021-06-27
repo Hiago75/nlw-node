@@ -17,12 +17,18 @@ class App {
 
   constructor() {
     this._app = express();
-    this.routes();
     this.middlewares();
+    this.routes();
+    this.errorHandler();
   }
 
   get app() {
     return this._app;
+  }
+
+  middlewares() {
+    this.app.use(cors());
+    this.app.use(express.json());
   }
 
   routes() {
@@ -32,9 +38,7 @@ class App {
     this.app.use('/auth', authRoutes);
   }
 
-  middlewares() {
-    this.app.use(cors());
-    this.app.use(express.json());
+  errorHandler() {
     this.app.use(errorHandler);
   }
 }
