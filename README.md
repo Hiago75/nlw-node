@@ -14,7 +14,7 @@ No caso da trilha de Node (a que eu escolhi) foi produzida uma API chamada NLW V
 
 ### NLW Valoriza
 
-Esta API como intuito proprorcionar a capacidade de enviar elogios de um usuário para o outro. Nestes elogios estão presentes tags criadas separadamente por usuários com permissão de administrador, o nome personalizado da tag, uma mensagem, o usuário que enviou e o usuário que recebeu.
+Esta API como intuito proporcionar a capacidade de enviar elogios de um usuário para o outro. Nestes elogios estão presentes tags criadas separadamente por usuários com permissão de administrador, o nome personalizado da tag, uma mensagem, o usuário que enviou e o usuário que recebeu.
 
 Outros recursos presentes são:
 
@@ -23,12 +23,65 @@ Outros recursos presentes são:
 - Listar as tags
 - Criar usuários
 - Listar os usuários
-- Listar os usuários com permisão de administrador
+- Listar os usuários com permissão de administrador
 - Autenticar o usuário com JWT
 
-[🧩 Tecnologias Usadas](readmeFiles/%20fe60b3e0fd7f4d1aa972e3d016cfa983/%F0%9F%A7%A9%20Tecnologias%20Usadas%2047d29f0734644933a4a201a5cbd9b58b.csv)
+## 🧩 Tecnologias Usadas
+---
+### Durante a NLW
 
-[O que foi feito ?](readmeFiles/%20fe60b3e0fd7f4d1aa972e3d016cfa983/O%20que%20foi%20feito%20278507161f6b4aba9c87a08c01769198.csv)
+- TypeScript
+- NodeJS
+- Express
+- TypeORM
+- SQLite
+- JWT - Jason Web Token
+- BCryptJS
+- UUID
+- Cors
+
+### Milha extra
+- Validator
+- Docker
+- PostgreSQL
+- ESLint
+- Prettier
+
+## O que foi feito ?
+
+---
+
+### Durante a NLW
+
+- [x] Aprender os conceitos do Node, TypeScript, Express, TypeORM
+- [x] Aprender a história do Node e porque ele foi criado
+- [x] Aprender sobre o APIs
+- [x] Aprenser sobre TypeORM, Banco de dados relacional, Migrations, entidades, controllers, services, middlewares, chaves estrangeiras
+- [x] Aprender sobre JWT
+- [x] Criar um projeto unindo todos esses conceitos e um pouco mais 
+
+### A milha extra
+
+- [x] Classe personalizada de erro expansível através de criação de subclasses que herdam uma classe abstrata (OCP)
+- [x] Banco de dados alterado para PostgreSQL
+- [x] Refatorado o maximo possível do código (com base no tempo disponível)
+- [x] Melhorada a arquitetura de pastas
+- [x] Melhorada a arquitetura de arquivos
+- [x] Criado nova busca para users (buscar por administradores)
+- [x] Criar validators para os services afim de separar as validações da classe principal
+- [x] Fazer comentários pelo código
+- [x] "Tipar" as funções, classes e métodos
+
+### Além da milha extra
+
+- [ ] Otimizar ainda mais o código
+- [ ] Comentar o código inteiro
+- [ ] Fazer testes com Jest
+- [ ] Fazer sistema de disparo de e-mails (não foi feito na milha extra pela ausencia de um dominio)
+- [ ] Colocar em produção
+- [ ] Fazer o Front-End
+
+
 
 ## Como funciona ?
 
@@ -37,7 +90,7 @@ Outros recursos presentes são:
 A aplicação não sofreu deploy ainda, ou seja, não está no ar, sendo assim ainda não é possível acessa-la de forma externa mas você pode acessar a mesma direta no seu computador, para isso basta seguir os seguintes passos:
 
 - Clone o repositório usando Git
-- Rode `npm i` ou `yarn` para baixar as dependencias
+- Rode `npm i` ou `yarn` para baixar as dependências
 - Use `docker-compose up -d` para criar o banco de dados com o Docker (é necessário ter ambos, Docker e Docker-compose instalados)
 - Rode `npm typeorm migration:run` para criar as tabelas dentro do banco de dados
 - Rode `npm run dev`  ou `yarn run dev` para iniciar a API
@@ -48,7 +101,7 @@ As rotas disponíveis são:
 
 - /users (POST) - Cria um usuário
 - /users (GET) - Lista todos os usuários
-- /usesr/compliments/received (GET) - Lista todos os elogios recebidos pelo usuário autenticado
+- /users/compliments/received (GET) - Lista todos os elogios recebidos pelo usuário autenticado
 - /users/compliments/sent (GET) - Lista todos os elogios enviados pelo usuário autenticado
 - /users/admin (GET) - Lista os usuários com cargo de administrador
 - /auth (POST) - Cria o Token de autenticação
