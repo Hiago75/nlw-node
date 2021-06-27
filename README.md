@@ -14,7 +14,7 @@ No caso da trilha de Node (a que eu escolhi) foi produzida uma API chamada NLW V
 
 ### NLW Valoriza
 
-Esta API como intuito proprorcionar a capacidade de enviar elogios de um usuário para o outro. Nestes elogios estão presentes tags criadas separadamente por usuários com permissão de administrador, o nome personalizado da tag, uma mensagem, o usuário que enviou e o usuário que recebeu. 
+Esta API como intuito proprorcionar a capacidade de enviar elogios de um usuário para o outro. Nestes elogios estão presentes tags criadas separadamente por usuários com permissão de administrador, o nome personalizado da tag, uma mensagem, o usuário que enviou e o usuário que recebeu.
 
 Outros recursos presentes são:
 
@@ -26,9 +26,9 @@ Outros recursos presentes são:
 - Listar os usuários com permisão de administrador
 - Autenticar o usuário com JWT
 
-[🧩 Tecnologias Usadas](NLW%20-%20Together%20(trilha%20Node)%20fe60b3e0fd7f4d1aa972e3d016cfa983/%F0%9F%A7%A9%20Tecnologias%20Usadas%2047d29f0734644933a4a201a5cbd9b58b.csv)
+[🧩 Tecnologias Usadas](./readmeFiles/%20fe60b3e0fd7f4d1aa972e3d016cfa983/%F0%9F%A7%A9%20Tecnologias%20Usadas%2047d29f0734644933a4a201a5cbd9b58b.csv)
 
-[O que foi feito ?](NLW%20-%20Together%20(trilha%20Node)%20fe60b3e0fd7f4d1aa972e3d016cfa983/O%20que%20foi%20feito%20278507161f6b4aba9c87a08c01769198.csv)
+[O que foi feito ?](./readmeFiles/%20fe60b3e0fd7f4d1aa972e3d016cfa983/O%20que%20foi%20feito%20278507161f6b4aba9c87a08c01769198.csv)
 
 ## Como funciona ?
 
